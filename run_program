@@ -12,5 +12,4 @@ IFS=' ' read -r -a NODE_ARRAY <<< "$NODES"
 #echo "Second element of NODE_ARRAY: ${NODE_ARRAY[1]}"
 
 here=`pwd`
-echo "ssh c${NODE_ARRAY[1]} cd $here; python3 & cnnhw.py 1 >& tmp1"
-echo "python3 cnnhw.py 0 >& tmp0 & python3 cnnhw.py -1"
+ssh c${NODE_ARRAY[1]} cd $here; python3 cnnhw.py 1 >& tmp1 & python3 cnnhw.py 0 >& tmp0 & python3 cnnhw.py -1
