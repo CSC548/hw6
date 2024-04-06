@@ -1,0 +1,11 @@
+NODES=`echo $SLURM_NODELIST | tr -d c | tr -d [ | tr -d ] | perl -pe 's/(\d+)-(\d+)/join(",",$1..$2)/eg' | awk 'BEGIN { RS=","} { print "c"$1 }'`
+
+
+echo ${NODES[1]}
+# for curNode in $NODES; do
+#   echo ssh $curNode
+#     # for (( i=0; i<$ranks_per_node; i++ )); do
+# 	# ssh -n $curNode "export MYMPI_NODELIST=$SLURM_NODELIST;export MYMPI_NODENAME=\`hostname\`; export MYMPI_RANK=$rank; export MYMPI_NTASKS=$SLURM_NTASKS; export ROOT_IP=$ROOT_IP; export MY_IP=\$(hostname -i); cd $PWD; $CMD" & pid[$rank]=$!
+# 	# (( rank++ ))
+#     # done
+# done
