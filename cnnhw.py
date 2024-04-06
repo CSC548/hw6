@@ -1,9 +1,11 @@
 # # -*- coding: utf-8 -*-
 # ## Stage 1: Installing dependencies and notebook gpu setup
 import os
+os.environ['NCCL_P2P_DISABLE'] = "1"
+# Commented out IPython magic to ensure Python compatibility.
+#get a local copy of datasets
 import sys
 import tensorflow as tf
-import matplotlib.pyplot as plt
 
 from tensorflow.keras.datasets import cifar10
 
@@ -11,6 +13,12 @@ from tensorflow.keras.datasets import cifar10
 from tensorflow.compat.v1 import ConfigProto
 from tensorflow.compat.v1 import InteractiveSession
 
+config = ConfigProto()
+config.gpu_options.allow_growth = True
+session = InteractiveSession(config=config)
+
+# %matplotlib inline
+tf.__version__
 
 def get_compiled_model():
   model = tf.keras.models.Sequential()
@@ -145,47 +153,31 @@ if __name__ == "__main__":
   if (len(argv) != 2):
     print("Invalid use of cnnhw you must only provide a job index")
     print("Proper usage: python cnnhw.py <number>")
-    exit(1)
-  #!pip install tensorflow-gpu==2.0.0.alpha0
+    exit(1) 
+  # getting the list of nodes in the form ["c28", "c29"] 
   nodes = os.environ.get('SLURM_NODELIST')
   nodes = nodes.replace("c", "")
   nodes = nodes.replace("[", "")
   nodes = nodes.replace("]", "")
   nodes = nodes.split("-")
-
+  new_nodes = []   
   for node in nodes:
-    print("c" + node)
-  # ## Stage 2: Importing dependencies for the project
+    new_nodes.append("c" + node)
+  nodes = new_nodes
 
-  # os.environ['NCCL_P2P_DISABLE'] = "1"
-  # # Commented out IPython magic to ensure Python compatibility.
-  # #get a local copy of datasets
-  # os.system("ln -s /mnt/beegfs/fmuelle/.keras ~/")
-
-  # config = ConfigProto()
-  # config.gpu_options.allow_growth = True
-  # session = InteractiveSession(config=config)
-
-  # # %matplotlib inline
-  # tf.__version__
-
-  # ## Stage 3: Dataset preprocessing
-
-  # ### Loading the Cifar10 dataset
-
-  # X_train, y_train, X_test, y_test = get_dataset()
+  X_train, y_train, X_test, y_test = get_dataset()
   # ## HOMEWORK SOLUTION
 
   # #- Increase the number of epochs to 15, check the documentation of model.fit()
 
   # ### Training the model
 
-  # model = get_compiled_model()
-  # model.fit(X_train, y_train, epochs=15)
+  model = get_compiled_model()
+  model.fit(X_train, y_train, epochs=15)
 
   # ### Model evaluation and prediction
 
-  # test_loss, test_accuracy = model.evaluate(X_test, y_test)
+  test_loss, test_accuracy = model.evaluate(X_test, y_test)
 
-  # print("Test accuracy: {}".format(test_accuracy))
+  print("Test accuracy: {}".format(test_accuracy))
 
