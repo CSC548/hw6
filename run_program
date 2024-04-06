@@ -1,11 +1,16 @@
-NODES=`echo $SLURM_NODELIST | tr -d c | tr -d [ | tr -d ] | perl -pe 's/(\d+)-(\d+)/join(",",$1..$2)/eg' | awk 'BEGIN { RS=","} { print "c"$1 }'`
+# Extract the range from SLURM_NODELIST and expand it into individual node names
+NODES=$(echo $SLURM_NODELIST | tr -d 'c[]' | perl -pe 's/(\d+)-(\d+)/join(" ",$1..$2)/eg')
 
+# Print content of NODES for debugging
+#echo "Content of NODES: $NODES"
 
-echo ${NODES[1]}
-# for curNode in $NODES; do
-#   echo ssh $curNode
-#     # for (( i=0; i<$ranks_per_node; i++ )); do
-# 	# ssh -n $curNode "export MYMPI_NODELIST=$SLURM_NODELIST;export MYMPI_NODENAME=\`hostname\`; export MYMPI_RANK=$rank; export MYMPI_NTASKS=$SLURM_NTASKS; export ROOT_IP=$ROOT_IP; export MY_IP=\$(hostname -i); cd $PWD; $CMD" & pid[$rank]=$!
-# 	# (( rank++ ))
-#     # done
-# done
+# Split the NODES string into an array using space as delimiter
+IFS=' ' read -r -a NODE_ARRAY <<< "$NODES"
+
+# Print the first and second elements of the NODE_ARRAY
+#echo "First element of NODE_ARRAY: ${NODE_ARRAY[0]}"
+#echo "Second element of NODE_ARRAY: ${NODE_ARRAY[1]}"
+
+here=`pwd`
+echo "ssh c${NODE_ARRAY[1]} cd $here; python3 & cnnhw.py 1 >& tmp1"
+echo "python3 cnnhw.py 0 >& tmp0 & python3 cnnhw.py -1"
