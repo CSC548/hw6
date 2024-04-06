@@ -153,29 +153,26 @@ if __name__ == "__main__":
   if (len(argv) != 2):
     print("Invalid use of cnnhw you must only provide a job index")
     print("Proper usage: python cnnhw.py <number>")
-    exit(1) 
-  # getting the list of nodes in the form ["c28", "c29"] 
+    exit(1)
+  # getting the list of nodes in the form ["c28", "c29"]
   nodes = os.environ.get('SLURM_NODELIST')
   nodes = nodes.replace("c", "")
   nodes = nodes.replace("[", "")
   nodes = nodes.replace("]", "")
   nodes = nodes.split("-")
-  new_nodes = []   
+  new_nodes = []
   for node in nodes:
     new_nodes.append("c" + node)
   nodes = new_nodes
 
   X_train, y_train, X_test, y_test = get_dataset()
-  # ## HOMEWORK SOLUTION
 
-  # #- Increase the number of epochs to 15, check the documentation of model.fit()
-
-  # ### Training the model
+  # Training the model
 
   model = get_compiled_model()
   model.fit(X_train, y_train, epochs=15)
 
-  # ### Model evaluation and prediction
+  # Model evaluation and prediction
 
   test_loss, test_accuracy = model.evaluate(X_test, y_test)
 
