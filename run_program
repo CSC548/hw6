@@ -2,7 +2,7 @@
 NODES=$(echo $SLURM_NODELIST | tr -d 'c[]' | perl -pe 's/(\d+)-(\d+)/join(" ",$1..$2)/eg')
 
 # Print content of NODES for debugging
-#echo "Content of NODES: $NODES"
+echo "Content of TF CONFIG: $TF_CONFIG"
 
 # Split the NODES string into an array using space as delimiter
 IFS=' ' read -r -a NODE_ARRAY <<< "$NODES"

@@ -1,12 +1,16 @@
 # # -*- coding: utf-8 -*-
 # ## Stage 1: Installing dependencies and notebook gpu setup
+
 import os
+import json
 os.environ['NCCL_P2P_DISABLE'] = "1"
 # Commented out IPython magic to ensure Python compatibility.
 #get a local copy of datasets
 import sys
 import tensorflow as tf
-
+from tensorflow.keras.callbacks import TensorBoard
+from tensorflow.keras.callbacks import ModelCheckpoint
+import datetime
 from tensorflow.keras.datasets import cifar10
 
 #for RTX GPUs
@@ -154,7 +158,9 @@ if __name__ == "__main__":
     print("Invalid use of cnnhw you must only provide a job index")
     print("Proper usage: python cnnhw.py <number>")
     exit(1)
-  # getting the list of nodes in the form ["c28", "c29"]
+
+
+   # getting the list of nodes in the form ["c28", "c29"]
   nodes = os.environ.get('SLURM_NODELIST')
   nodes = nodes.replace("c", "")
   nodes = nodes.replace("[", "")
@@ -164,17 +170,98 @@ if __name__ == "__main__":
   for node in nodes:
     new_nodes.append("c" + node)
   nodes = new_nodes
+  # Define the cluster specification
+  cluster_spec = {
+      "worker": [f"{nodes[0]}:8000", f"{nodes[1]}:8000"],
+      "evaluator": [f"{nodes[0]}:1234"]
+  }
 
-  X_train, y_train, X_test, y_test = get_dataset()
+  # For the first worker (c22), set the task type and index in the TF_CONFIG environment variable to "worker" and 0, respectively:
+  if argv[1] == "0":
+    os.environ["TF_CONFIG"] = json.dumps({
+        "cluster": cluster_spec,
+        "task": {"type": "worker", "index": 0}  # This is for the first worker
+    })
 
-  # Training the model
+  # For the second worker (c23), set the task type and index in the TF_CONFIG environment variable to "worker" and 1, respectively:
+  elif argv[1] == "1":
+    os.environ["TF_CONFIG"] = json.dumps({
+        "cluster": cluster_spec,
+        "task": {"type": "worker", "index": 1}  # This is for the second worker
+    })
 
-  model = get_compiled_model()
-  model.fit(X_train, y_train, epochs=15)
+  # For the evaluator, you would set the task type and index in the TF_CONFIG environment variable to "evaluator" and 0, respectively:
+  elif argv[1] == "-1":
+    os.environ["TF_CONFIG"] = json.dumps({
+        "cluster": cluster_spec,
+        "task": {"type": "evaluator", "index": 0}  # This is for the evaluator
+    })
+  # Check if the current task is evaluator
+  if argv[1] == "-1":
+    cdir = "/home/tjoshi/ckpt"
+    tdir = "/home/tjoshi/tb"
+  else:
+    cdir = "/tmp/tjoshi/ckpt"
+    tdir = "/tmp/tjoshi/tb"
+  
+  # Remove the directories and any files within and Create the directories if all checkpoints are present
+  files = os.listdir(cdir)
+  checkpoint_exists = True
+  if all(f'ckpt-{i}' in files for i in range(1, 16)):
+    os.system(f"rm -rf {cdir}")
+    os.makedirs(cdir, exist_ok=True)
+    os.system(f"rm -rf {tdir}")
+    os.makedirs(tdir, exist_ok=True)
+    checkpoint_exists = False
+  elif not os.path.exists(cdir):
+    os.makedirs(cdir, exist_ok=True)
+    os.makedirs(tdir, exist_ok=True)
+    checkpoint_exists = False
+  
 
-  # Model evaluation and prediction
+  def make_or_restore_model(checkpoints_exist=False):
+    # Either restore the latest model, or create a fresh one
+    # if there is no checkpoint available.
+    if checkpoints_exist:
+      checkpoints = [cdir + "/" + name for name in os.listdir(cdir)]
+      if checkpoints:
+          latest_checkpoint = max(checkpoints, key=os.path.getctime)
+          print("Restoring from", latest_checkpoint)
+          return keras.models.load_model(latest_checkpoint)
+      print("Creating a new model")
+    return get_compiled_model()
+  
+  def get_data_and_model():
+    X_train, y_train, X_test, y_test = get_dataset()
+    
+    model = make_or_restore_model(checkpoint_exists)
+    return X_train, y_train, X_test, y_test, model
 
-  test_loss, test_accuracy = model.evaluate(X_test, y_test)
 
-  print("Test accuracy: {}".format(test_accuracy))
+
+
+
+  def train_model(model, X_train, y_train):
+    # Directory for TensorBoard logs
+    log_dir = tdir + "/logs/fit/" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+
+    # Create a callback for model checkpoints
+    checkpoint_cb = ModelCheckpoint(filepath=cdir + "/ckpt-{epoch}", save_freq="epoch")
+
+    # Create a TensorBoard callback
+    tensorboard_callback = TensorBoard(log_dir=log_dir, histogram_freq=1)
+
+    # Train the model
+    model.fit(X_train, y_train, epochs=15, callbacks=[checkpoint_cb, tensorboard_callback])
+
+  strategy = tf.distribute.experimental.MultiWorkerMirroredStrategy()
+
+  with strategy.scope():
+    X_train, y_train, X_test, y_test, model = get_data_and_model()
+    train_model(model, X_train, y_train)
+
+    # Model evaluation and prediction
+    test_loss, test_accuracy = model.evaluate(X_test, y_test)
+
+    print("Test accuracy: {}".format(test_accuracy))
 
