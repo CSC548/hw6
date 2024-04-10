@@ -1,7 +1,7 @@
 # # -*- coding: utf-8 -*-
 # ## Stage 1: Installing dependencies and notebook gpu setup
 
-import os
+import os, shutil
 import json
 os.environ['NCCL_P2P_DISABLE'] = "1"
 # Commented out IPython magic to ensure Python compatibility.
@@ -197,27 +197,23 @@ if __name__ == "__main__":
         "task": {"type": "evaluator", "index": 0}  # This is for the evaluator
     })
   # Check if the current task is evaluator
+  user = os.environ.get("USER")
   if argv[1] == "-1":
-    cdir = "/home/tjoshi/ckpt"
-    tdir = "/home/tjoshi/tb"
+    cdir = "/home/" + user + "/ckpt"
+    tdir = "/home/" + user + "/tb"
   else:
-    cdir = "/tmp/tjoshi/ckpt"
-    tdir = "/tmp/tjoshi/tb"
+    cdir = "/tmp/" + user + "/ckpt"
+    tdir = "/tmp/" + user +"/tb"
   
   # Remove the directories and any files within and Create the directories if all checkpoints are present
-  files = os.listdir(cdir)
-  checkpoint_exists = True
-  if all(f'ckpt-{i}' in files for i in range(1, 16)):
-    os.system(f"rm -rf {cdir}")
-    os.makedirs(cdir, exist_ok=True)
-    os.system(f"rm -rf {tdir}")
-    os.makedirs(tdir, exist_ok=True)
-    checkpoint_exists = False
-  elif not os.path.exists(cdir):
-    os.makedirs(cdir, exist_ok=True)
-    os.makedirs(tdir, exist_ok=True)
-    checkpoint_exists = False
   
+  if (os.path.exists(cdir)):
+    os.system(f"rm -rf {cdir}")
+  if (os.path.exists(tdir)): 
+    os.system(f"rm -rf {tdir}")
+  
+  os.makedirs(cdir, exist_ok=True)
+  os.makedirs(tdir, exist_ok=True)
 
   def make_or_restore_model(checkpoints_exist=False):
     # Either restore the latest model, or create a fresh one
