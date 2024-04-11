@@ -198,6 +198,7 @@ if __name__ == "__main__":
   for node in nodes:
     new_nodes.append("c" + node)
   nodes = new_nodes
+  print(nodes)
   # Define the cluster specification
   cluster_spec = {
       "worker": [f"{nodes[0]}:8000", f"{nodes[1]}:8000"],
