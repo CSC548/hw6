@@ -201,7 +201,7 @@ if __name__ == "__main__":
   # Define the cluster specification
   cluster_spec = {
       "worker": [f"{nodes[0]}:8000", f"{nodes[1]}:8000"],
-      "evaluator": [f"{nodes[0]}:1234"]
+      "evaluator": [f"{nodes[0]}:8000"]
   }
 
   # For the first worker (c22), set the task type and index in the TF_CONFIG environment variable to "worker" and 0, respectively:
@@ -254,7 +254,7 @@ if __name__ == "__main__":
   strategy = tf.distribute.experimental.MultiWorkerMirroredStrategy()
 
   with strategy.scope():
-    X_train, y_train, X_test, y_test, model = get_data_and_model(checkpoint_exists)
+    X_train, y_train, X_test, y_test, model = get_data_and_model(cdir, checkpoint_exists)
     train_model(cdir, model, X_train, y_train, epochs)
 
     # Model evaluation and prediction

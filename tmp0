@@ -1,14 +1,32 @@
-2024-04-10 14:12:22.182812: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 AVX512F FMA
+2024-04-11 12:38:08.535635: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
 To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
-2024-04-10 14:12:24.437911: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1510] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 6039 MB memory:  -> device: 0, name: NVIDIA GeForce RTX 4060 Ti, pci bus id: 0000:3b:00.0, compute capability: 8.9
-2024-04-10 14:12:24.439273: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1510] Created device /job:localhost/replica:0/task:0/device:GPU:1 with 4627 MB memory:  -> device: 1, name: NVIDIA GeForce RTX 2060, pci bus id: 0000:af:00.0, compute capability: 7.5
-WARNING:tensorflow:From cnnhw.py:253: _CollectiveAllReduceStrategyExperimental.__init__ (from tensorflow.python.distribute.collective_all_reduce_strategy) is deprecated and will be removed in a future version.
+2024-04-11 12:38:08.906567: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1510] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 6037 MB memory:  -> device: 0, name: NVIDIA GeForce RTX 4060 Ti, pci bus id: 0000:41:00.0, compute capability: 8.9
+2024-04-11 12:38:08.907262: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1510] Created device /job:localhost/replica:0/task:0/device:GPU:1 with 6655 MB memory:  -> device: 1, name: NVIDIA GeForce RTX 2060 SUPER, pci bus id: 0000:01:00.0, compute capability: 7.5
+WARNING:tensorflow:From cnnhw.py:254: _CollectiveAllReduceStrategyExperimental.__init__ (from tensorflow.python.distribute.collective_all_reduce_strategy) is deprecated and will be removed in a future version.
 Instructions for updating:
 use distribute.MultiWorkerMirroredStrategy instead
-2024-04-10 14:12:24.449443: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1510] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 6039 MB memory:  -> device: 0, name: NVIDIA GeForce RTX 4060 Ti, pci bus id: 0000:3b:00.0, compute capability: 8.9
-2024-04-10 14:12:24.449644: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1510] Created device /job:localhost/replica:0/task:0/device:GPU:1 with 4627 MB memory:  -> device: 1, name: NVIDIA GeForce RTX 2060, pci bus id: 0000:af:00.0, compute capability: 7.5
-2024-04-10 14:12:24.455483: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1510] Created device /job:worker/replica:0/task:0/device:GPU:0 with 6039 MB memory:  -> device: 0, name: NVIDIA GeForce RTX 4060 Ti, pci bus id: 0000:3b:00.0, compute capability: 8.9
-2024-04-10 14:12:24.455679: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1510] Created device /job:worker/replica:0/task:0/device:GPU:1 with 4627 MB memory:  -> device: 1, name: NVIDIA GeForce RTX 2060, pci bus id: 0000:af:00.0, compute capability: 7.5
-2024-04-10 14:12:24.833023: I tensorflow/core/distributed_runtime/rpc/grpc_channel.cc:272] Initialize GrpcChannelCache for job evaluator -> {0 -> c26:1234}
-2024-04-10 14:12:24.833068: I tensorflow/core/distributed_runtime/rpc/grpc_channel.cc:272] Initialize GrpcChannelCache for job worker -> {0 -> c26:8000, 1 -> c27:8000}
-2024-04-10 14:12:24.837546: I tensorflow/core/distributed_runtime/rpc/grpc_server_lib.cc:427] Started server with target: grpc://c26:8000
+2024-04-11 12:38:08.916568: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1510] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 6037 MB memory:  -> device: 0, name: NVIDIA GeForce RTX 4060 Ti, pci bus id: 0000:41:00.0, compute capability: 8.9
+2024-04-11 12:38:08.917059: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1510] Created device /job:localhost/replica:0/task:0/device:GPU:1 with 6655 MB memory:  -> device: 1, name: NVIDIA GeForce RTX 2060 SUPER, pci bus id: 0000:01:00.0, compute capability: 7.5
+2024-04-11 12:38:08.922944: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1510] Created device /job:worker/replica:0/task:0/device:GPU:0 with 6037 MB memory:  -> device: 0, name: NVIDIA GeForce RTX 4060 Ti, pci bus id: 0000:41:00.0, compute capability: 8.9
+2024-04-11 12:38:08.923421: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1510] Created device /job:worker/replica:0/task:0/device:GPU:1 with 6655 MB memory:  -> device: 1, name: NVIDIA GeForce RTX 2060 SUPER, pci bus id: 0000:01:00.0, compute capability: 7.5
+E0411 12:38:08.925383178 2416192 server_chttp2.cc:40]        {"created":"@1712853488.925332531","description":"No address added out of total 1 resolved","file":"external/com_github_grpc_grpc/src/core/ext/transport/chttp2/server/chttp2_server.cc","file_line":395,"referenced_errors":[{"created":"@1712853488.925330267","description":"Failed to add any wildcard listeners","file":"external/com_github_grpc_grpc/src/core/lib/iomgr/tcp_server_posix.cc","file_line":342,"referenced_errors":[{"created":"@1712853488.925318455","description":"Unable to configure socket","fd":56,"file":"external/com_github_grpc_grpc/src/core/lib/iomgr/tcp_server_utils_posix_common.cc","file_line":216,"referenced_errors":[{"created":"@1712853488.925314567","description":"Address already in use","errno":98,"file":"external/com_github_grpc_grpc/src/core/lib/iomgr/tcp_server_utils_posix_common.cc","file_line":189,"os_error":"Address already in use","syscall":"bind"}]},{"created":"@1712853488.925330097","description":"Unable to configure socket","fd":56,"file":"external/com_github_grpc_grpc/src/core/lib/iomgr/tcp_server_utils_posix_common.cc","file_line":216,"referenced_errors":[{"created":"@1712853488.925327091","description":"Address already in use","errno":98,"file":"external/com_github_grpc_grpc/src/core/lib/iomgr/tcp_server_utils_posix_common.cc","file_line":189,"os_error":"Address already in use","syscall":"bind"}]}]}]}
+2024-04-11 12:38:08.925413: E tensorflow/core/distributed_runtime/rpc/grpc_server_lib.cc:545] Unknown: Could not start gRPC server
+2024-04-11 12:38:08.925850: E tensorflow/core/common_runtime/eager/context_distributed_manager.cc:699] Could not start gRPC server
+Traceback (most recent call last):
+  File "cnnhw.py", line 254, in <module>
+    strategy = tf.distribute.experimental.MultiWorkerMirroredStrategy()
+  File "/home/gsgall/.local/lib/python3.6/site-packages/tensorflow/python/util/deprecation.py", line 346, in new_func
+    return func(*args, **kwargs)
+  File "/home/gsgall/.local/lib/python3.6/site-packages/tensorflow/python/distribute/collective_all_reduce_strategy.py", line 254, in __init__
+    self).__init__(cluster_resolver, communication_options)
+  File "/home/gsgall/.local/lib/python3.6/site-packages/tensorflow/python/distribute/collective_all_reduce_strategy.py", line 189, in __init__
+    communication_options=communication_options))
+  File "/home/gsgall/.local/lib/python3.6/site-packages/tensorflow/python/distribute/collective_all_reduce_strategy.py", line 327, in __init__
+    self._initialize_strategy(self._cluster_resolver)
+  File "/home/gsgall/.local/lib/python3.6/site-packages/tensorflow/python/distribute/collective_all_reduce_strategy.py", line 339, in _initialize_strategy
+    self._initialize_multi_worker(cluster_resolver)
+  File "/home/gsgall/.local/lib/python3.6/site-packages/tensorflow/python/distribute/collective_all_reduce_strategy.py", line 469, in _initialize_multi_worker
+    context.context().ensure_initialized()
+  File "/home/gsgall/.local/lib/python3.6/site-packages/tensorflow/python/eager/context.py", line 567, in ensure_initialized
+    pywrap_tfe.TFE_EnableCollectiveOps(context_handle, server_def_str)
+tensorflow.python.framework.errors_impl.UnknownError: Could not start gRPC server
