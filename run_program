@@ -12,4 +12,4 @@ IFS=' ' read -r -a NODE_ARRAY <<< "$NODES"
 #echo "Second element of NODE_ARRAY: ${NODE_ARRAY[1]}"
 
 here=`pwd`
-ssh c${NODE_ARRAY[1]} fuser -k 8000/tcp && pd $here; python3 cnnhw.py 1 >& tmp1 & fuser -k 8000/tcp && python3 cnnhw.py 0 >& tmp0 && fuser -k 8000/tcp && python3 cnnhw.py -1
+ssh c${NODE_ARRAY[1]} fuser -k 8000/tcp && cd $here; python3 cnnhw.py 1 >& tmp1 & fuser -k 8000/tcp && python3 cnnhw.py 0 >& tmp0 && fuser -k 8000/tcp && python3 cnnhw.py -1
