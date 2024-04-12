@@ -1,0 +1,12 @@
+2024-04-12 17:42:12.277802: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 AVX512F FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2024-04-12 17:42:13.292480: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1510] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 7377 MB memory:  -> device: 0, name: Quadro P4000, pci bus id: 0000:af:00.0, compute capability: 6.1
+{'worker': ['c0:2345', 'c1:1234'], 'evaluator': ['c0:1235']}
+Traceback (most recent call last):
+  File "cnnhw.py", line 211, in <module>
+    strategy = tf.distribute.MultiWorkerMirroredStrategy(cluster_spec2)
+  File "/home/gsgall/.local/lib/python3.6/site-packages/tensorflow/python/distribute/collective_all_reduce_strategy.py", line 189, in __init__
+    communication_options=communication_options))
+  File "/home/gsgall/.local/lib/python3.6/site-packages/tensorflow/python/distribute/collective_all_reduce_strategy.py", line 322, in __init__
+    raise ValueError("cluster_resolver must be an instance of "
+ValueError: cluster_resolver must be an instance of tf.distribute.cluster_resolver.ClusterResolver
