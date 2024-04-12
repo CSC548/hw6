@@ -201,8 +201,8 @@ if __name__ == "__main__":
   print(nodes)
   # Define the cluster specification
   cluster_spec = {
-      "worker": [f"{nodes[0]}:8000", f"{nodes[1]}:8000"],
-      "evaluator": [f"{nodes[0]}:8080"]
+      "worker": ["c40:8000", "c41:8000"],
+      "evaluator": ["c40:8080"]
   }
 
   # For the first worker (c22), set the task type and index in the TF_CONFIG environment variable to "worker" and 0, respectively:
