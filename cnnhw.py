@@ -173,12 +173,16 @@ if __name__ == "__main__":
        "evaluator": [f"{nodes[0]}:1235"]
    }
 
+  cluster_spec = tf.train.ClusterSpec(cluster_spec)
+  resolver = None
   # For the first worker (c22), set the task type and index in the TF_CONFIG environment variable to "worker" and 0, respectively:
   if argv[1] == "0":
     os.environ["TF_CONFIG"] = json.dumps({
         "cluster": cluster_spec,
         "task": {"type": "worker", "index": 0}  # This is for the first worker
     })
+    resolver = SimpleClusterResolver(cluster_spec, task_type="worker",
+                                        task_id=0)
 
   # For the second worker (c23), set the task type and index in the TF_CONFIG environment variable to "worker" and 1, respectively:
   elif argv[1] == "1":
@@ -186,6 +190,8 @@ if __name__ == "__main__":
         "cluster": cluster_spec,
         "task": {"type": "worker", "index": 1}  # This is for the second worker
     })
+    resolver = SimpleClusterResolver(cluster_spec, task_type="worker",
+                                        task_id=0)
 
   # For the evaluator, you would set the task type and index in the TF_CONFIG environment variable to "evaluator" and 0, respectively:
   elif argv[1] == "-1":
@@ -193,13 +199,16 @@ if __name__ == "__main__":
         "cluster": cluster_spec,
         "task": {"type": "evaluator", "index": 0}  # This is for the evaluator
     })
+    resolver = SimpleClusterResolver(cluster_spec, task_type="evaluator",
+                                        task_id=1)
 
   print(cluster_spec)
   X_train, y_train, X_test, y_test = get_dataset()
 
   # Training the model
 
-  strategy = tf.distribute.MultiWorkerMirroredStrategy()
+
+  strategy = tf.distribute.MultiWorkerMirroredStrategy(cluster_spec)
   with strategy.scope():
     model = get_compiled_model()
     model.fit(X_train, y_train, epochs=15)
