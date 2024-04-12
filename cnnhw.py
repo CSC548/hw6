@@ -169,8 +169,8 @@ if __name__ == "__main__":
   # reset the environment variable
   os.environ.pop('TF_CONFIG', None)
   cluster_spec = {
-       "worker": [f"{nodes[0]}:8001", f"{nodes[1]}:8002"],
-       "evaluator": [f"{nodes[0]}:8000"]
+       "worker": [f"{nodes[0]}:2345", f"{nodes[1]}:1234"],
+       "evaluator": [f"{nodes[0]}:1235"]
    }
 
   # For the first worker (c22), set the task type and index in the TF_CONFIG environment variable to "worker" and 0, respectively:
@@ -194,7 +194,7 @@ if __name__ == "__main__":
         "task": {"type": "evaluator", "index": 0}  # This is for the evaluator
     })
 
-
+  print(cluster_spec)
   X_train, y_train, X_test, y_test = get_dataset()
 
   # Training the model
