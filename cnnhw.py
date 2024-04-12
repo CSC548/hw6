@@ -6,6 +6,7 @@ os.environ['NCCL_P2P_DISABLE'] = "1"
 #get a local copy of datasets
 import sys
 import tensorflow as tf
+import json
 
 from tensorflow.keras.datasets import cifar10
 
@@ -165,16 +166,46 @@ if __name__ == "__main__":
     new_nodes.append("c" + node)
   nodes = new_nodes
 
+  # reset the environment variable
+  os.environ.pop('TF_CONFIG', None)
+  cluster_spec = {
+       "worker": [f"{nodes[0]}:8001", f"{nodes[1]}:8002"],
+       "evaluator": [f"{nodes[0]}:8000"]
+   }
+
+  # For the first worker (c22), set the task type and index in the TF_CONFIG environment variable to "worker" and 0, respectively:
+  if argv[1] == "0":
+    os.environ["TF_CONFIG"] = json.dumps({
+        "cluster": cluster_spec,
+        "task": {"type": "worker", "index": 0}  # This is for the first worker
+    })
+
+  # For the second worker (c23), set the task type and index in the TF_CONFIG environment variable to "worker" and 1, respectively:
+  elif argv[1] == "1":
+    os.environ["TF_CONFIG"] = json.dumps({
+        "cluster": cluster_spec,
+        "task": {"type": "worker", "index": 1}  # This is for the second worker
+    })
+
+  # For the evaluator, you would set the task type and index in the TF_CONFIG environment variable to "evaluator" and 0, respectively:
+  elif argv[1] == "-1":
+    os.environ["TF_CONFIG"] = json.dumps({
+        "cluster": cluster_spec,
+        "task": {"type": "evaluator", "index": 0}  # This is for the evaluator
+    })
+
+
   X_train, y_train, X_test, y_test = get_dataset()
 
   # Training the model
 
-  model = get_compiled_model()
-  model.fit(X_train, y_train, epochs=15)
+  strategy = tf.distribute.MultiWorkerMirroredStrategy()
+  with strategy.scope():
+    model = get_compiled_model()
+    model.fit(X_train, y_train, epochs=15)
 
   # Model evaluation and prediction
 
-  test_loss, test_accuracy = model.evaluate(X_test, y_test)
 
-  print("Test accuracy: {}".format(test_accuracy))
+  # print("Test accuracy: {}".format(test_accuracy))
 
