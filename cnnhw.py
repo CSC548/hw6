@@ -231,19 +231,19 @@ if __name__ == "__main__":
 
 
   epochs = 1 
-  # if (os.path.exists(cdir)):
-  #   files = os.listdir(cdir)
-  # # if there is a file for every epoch of training this means training is done
-  # # and we need to remove them all
-  #   if all(f'ckpt-{i}' in files for i in range(1, epochs + 1)):
-  #     os.system(f"rm -rf {cdir}")
-  #     os.system(f"rm -rf {tdir}")
-  #     checkpoint_exists = False
-  #   else:
-  #     checkpoint_exists = False
-  #   # # we'll make sure these directories exist
-  #   os.makedirs(cdir, exist_ok=True)
-  #   os.makedirs(tdir, exist_ok=True)
+  if (os.path.exists(cdir)):
+    files = os.listdir(cdir)
+  # if there is a file for every epoch of training this means training is done
+  # and we need to remove them all
+    if all(f'ckpt-{i}' in files for i in range(1, epochs + 1)):
+      os.system(f"rm -rf {cdir}")
+      os.system(f"rm -rf {tdir}")
+      checkpoint_exists = False
+    else:
+      checkpoint_exists = False
+    # # we'll make sure these directories exist
+    os.makedirs(cdir, exist_ok=True)
+    os.makedirs(tdir, exist_ok=True)
 
   strategy = tf.distribute.MultiWorkerMirroredStrategy()
 
