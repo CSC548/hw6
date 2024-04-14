@@ -21,5 +21,6 @@ for curNode in $(echo $NODES | tr ' ' '\n' | tac); do
   (( rank-- ))
   file="tmp$rank"
   port=$(($base_port + $rank))
-  ssh -n $curNode "export here=$here; export SLURM_NODELIST=$SLURM_NODELIST; export USER=$USER; fuser -k $port/tcp; cd $here; pwd; echo $file ; echo $port; export base_port=$base_port; echo $rank ;  python3 cnnhw.py $rank >& $file & "
+  ssh -n $curNode "export here=$here; export SLURM_NODELIST=$SLURM_NODELIST; export USER=$USER; fuser -k $port/tcp; cd $here; pwd; echo $file ; echo $port; export base_port=$base_port; echo $rank ;  python3 cnnhw.py $rank >& $file &" &  pid[$rank]=$!
 done
+

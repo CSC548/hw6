@@ -220,7 +220,7 @@ if __name__ == "__main__":
 
   job = "worker"
   if index == -1:
-    job = "evalulator"
+    job = "evaluator"
     index = 0
 
   os.environ["TF_CONFIG"] = json.dumps({
@@ -229,31 +229,31 @@ if __name__ == "__main__":
     })
 
 
-  # if (os.path.exists(cdir)):
-  #   files = files = os.listdir(cdir)
-  #   # if there is a file for every epoch of training this means training is done
-  #   # and we need to remove them all
-  #   if all(f'ckpt-{i}' in files for i in range(1, epochs + 1)):
-  #     os.system(f"rm -rf {cdir}")
-  #     os.system(f"rm -rf {tdir}")
-  #     checkpoint_exists = False
-  # else:
-  #   checkpoint_exists = False
+  epochs = 5
+  if (os.path.exists(cdir)):
+    files = files = os.listdir(cdir)
+  # if there is a file for every epoch of training this means training is done
+  # and we need to remove them all
+  if all(f'ckpt-{i}' in files for i in range(1, epochs + 1)):
+     os.system(f"rm -rf {cdir}")
+     os.system(f"rm -rf {tdir}")
+     checkpoint_exists = False
+  else:
+    checkpoint_exists = False
   # # we'll make sure these directories exist
-  # os.makedirs(cdir, exist_ok=True)
-  # os.makedirs(tdir, exist_ok=True)
+  os.makedirs(cdir, exist_ok=True)
+  os.makedirs(tdir, exist_ok=True)
 
   strategy = tf.distribute.MultiWorkerMirroredStrategy()
 
   checkpoint_exists = True
-  epochs = 15
 
-  with strategy.scope():
-    X_train, y_train, X_test, y_test, model = get_data_and_model(cdir, checkpoint_exists)
-    train_model(tdir, cdir, model, X_train, y_train, epochs)
-
+  if job == "worker": 
+     with strategy.scope():
+        X_train, y_train, X_test, y_test, model = get_data_and_model(cdir, checkpoint_exists)
+        train_model(tdir, cdir, model, X_train, y_train, epochs)
     # Model evaluation and prediction
-   # test_loss, test_accuracy = model.evaluate(X_test, y_test)
-
-   # print("Test accuracy: {}".format(test_accuracy))
+  elif job == "evaluator":  
+    test_loss, test_accuracy = model.evaluate(X_test, y_test)
+    print("Test accuracy: {}".format(test_accuracy))
 
