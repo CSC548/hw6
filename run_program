@@ -8,12 +8,18 @@ NODES=`echo $SLURM_NODELIST | tr -d c | tr -d [ | tr -d ] | perl -pe 's/(\d+)-(\
 # Increment rank passed to the code for each node
 # Ports range
 
-rank=${#NODES[@]}
+rank=0
 base_port=8000
 
+for curNode in $NODES; do
+  (( rank++ )) 
+done
+ 
+echo $rank 
+
 for curNode in $(echo $NODES | tr ' ' '\n' | tac); do
+  (( rank-- ))
   file="tmp$rank"
   port=$(($base_port + $rank))
   ssh -n $curNode "export here=$here; export SLURM_NODELIST=$SLURM_NODELIST; export USER=$USER; fuser -k $port/tcp; cd $here; pwd; echo $file ; echo $port; export base_port=$base_port; echo $rank ;  python3 cnnhw.py $rank >& $file & "
-  (( rank-- ))
 done
