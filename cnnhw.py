@@ -272,6 +272,7 @@ if __name__ == "__main__":
             curEpoch += 1
           except:
             # if an error happens, just wait for a second and retry
+            print(".", end="")
             time.sleep(1)
         else:
           # Print a . without a newline and sleep for a second
