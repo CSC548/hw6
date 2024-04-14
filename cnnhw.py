@@ -5,6 +5,7 @@ import os, shutil
 import json
 import sys
 import datetime
+import time
 os.environ['NCCL_P2P_DISABLE'] = "1"
 # Commented out IPython magic to ensure Python compatibility.
 #get a local copy of datasets
@@ -151,9 +152,11 @@ def get_dataset():
 def make_or_restore_model(cdir, checkpoints_exist=False):
   # Either restore the latest model, or create a fresh one
   # if there is no checkpoint available.
+  # first check if the checkpoint path exists
   if os.path.exists(cdir) and os.listdir(cdir):
     checkpoints = [cdir + "/" + name for name in os.listdir(cdir)]
     if checkpoints:
+        # get the most recent checkpoint
         latest_checkpoint = max(checkpoints, key=os.path.getctime)
         print("Restoring from", latest_checkpoint)
         return tf.keras.models.load_model(latest_checkpoint)
@@ -172,6 +175,9 @@ def train_model(tdir, cdir, model, X_train, y_train, epochs):
 
   # Train the model
   model.fit(X_train, y_train, epochs=epochs, callbacks=[checkpoint_cb, tensorboard_callback])
+
+def checkpoints_exist(cdir, epoch=1):
+  return os.path.exists(cdir) and os.listdir(cdir)
 
 def get_data_and_model(cdir, checkpoint_exists):
   X_train, y_train, X_test, y_test = get_dataset()
@@ -254,6 +260,26 @@ if __name__ == "__main__":
      train_model(tdir, cdir, model, X_train, y_train, epochs)
     # Model evaluation and prediction
   elif job == "evaluator":  
-    test_loss, test_accuracy = model.evaluate(X_test, y_test)
-    print("Test accuracy: {}".format(test_accuracy))
+    curEpoch = 1
+    # continuously check for new checkpoints for all epochs
+    while curEpoch <= epochs:
+      for file in os.listdir(cdir):
+        if "ckpt-"+curEpoch in file:
+          try:
+            # load the model and evaluate it
+            with strategy.scope():
+              X_train, y_train, X_test, y_test, model = get_data_and_model(cdir, checkpoint_exists)
+            test_loss, test_accuracy = model.evaluate(X_test, y_test)
+            # print the test accuracy
+            print("Epoch %d test accuracy: {}".format(curEpoch, test_accuracy))
+            curEpoch += 1
+          except:
+            # if an error happens, just wait for a second and retry
+            time.sleep(1)
+        else:
+          # Print a . without a newline and sleep for a second
+          print(".", end="")
+          time.sleep(1)
+
+    
 
