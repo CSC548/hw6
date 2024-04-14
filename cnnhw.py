@@ -255,8 +255,7 @@ if __name__ == "__main__":
 
   with strategy.scope():
     X_train, y_train, X_test, y_test, model = get_data_and_model(cdir, checkpoint_exists)
-
-  # train_model(cdir, model, X_train, y_train, epochs)
+    train_model(cdir, model, X_train, y_train, epochs)
 
     # Model evaluation and prediction
    # test_loss, test_accuracy = model.evaluate(X_test, y_test)
