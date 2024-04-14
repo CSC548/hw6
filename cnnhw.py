@@ -151,13 +151,13 @@ def get_dataset():
 def make_or_restore_model(cdir, checkpoints_exist=False):
   # Either restore the latest model, or create a fresh one
   # if there is no checkpoint available.
-  if checkpoints_exist:
-    checkpoints = [cdir + "/" + name for name in os.listdir(cdir)]
-    if checkpoints:
-        latest_checkpoint = max(checkpoints, key=os.path.getctime)
-        print("Restoring from", latest_checkpoint)
-        return tf.keras.models.load_model(latest_checkpoint)
-    print("Creating a new model")
+  # if checkpoints_exist:
+  #   checkpoints = [cdir + "/" + name for name in os.listdir(cdir)]
+  #   if checkpoints:
+  #       latest_checkpoint = max(checkpoints, key=os.path.getctime)
+  #       print("Restoring from", latest_checkpoint)
+  #       return tf.keras.models.load_model(latest_checkpoint)
+  #   print("Creating a new model")
   return get_compiled_model()
 
 def train_model(cdir, model, X_train, y_train, epochs):
@@ -237,26 +237,26 @@ if __name__ == "__main__":
 
   epochs = 15
 
-  if (os.path.exists(cdir)):
-    files = files = os.listdir(cdir)
-    # if there is a file for every epoch of training this means training is done
-    # and we need to remove them all
-    if all(f'ckpt-{i}' in files for i in range(1, epochs + 1)):
-      os.system(f"rm -rf {cdir}")
-      os.system(f"rm -rf {tdir}")
-      checkpoint_exists = False
-  else:
-    checkpoint_exists = False
-  # we'll make sure these directories exist
-  os.makedirs(cdir, exist_ok=True)
-  os.makedirs(tdir, exist_ok=True)
+  # if (os.path.exists(cdir)):
+  #   files = files = os.listdir(cdir)
+  #   # if there is a file for every epoch of training this means training is done
+  #   # and we need to remove them all
+  #   if all(f'ckpt-{i}' in files for i in range(1, epochs + 1)):
+  #     os.system(f"rm -rf {cdir}")
+  #     os.system(f"rm -rf {tdir}")
+  #     checkpoint_exists = False
+  # else:
+  #   checkpoint_exists = False
+  # # we'll make sure these directories exist
+  # os.makedirs(cdir, exist_ok=True)
+  # os.makedirs(tdir, exist_ok=True)
 
   strategy = tf.distribute.MultiWorkerMirroredStrategy()
 
   with strategy.scope():
     X_train, y_train, X_test, y_test, model = get_data_and_model(cdir, checkpoint_exists)
 
-  train_model(cdir, model, X_train, y_train, epochs)
+  # train_model(cdir, model, X_train, y_train, epochs)
 
     # Model evaluation and prediction
    # test_loss, test_accuracy = model.evaluate(X_test, y_test)
