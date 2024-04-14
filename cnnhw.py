@@ -151,13 +151,13 @@ def get_dataset():
 def make_or_restore_model(cdir, checkpoints_exist=False):
   # Either restore the latest model, or create a fresh one
   # if there is no checkpoint available.
-  # if checkpoints_exist:
-  #   checkpoints = [cdir + "/" + name for name in os.listdir(cdir)]
-  #   if checkpoints:
-  #       latest_checkpoint = max(checkpoints, key=os.path.getctime)
-  #       print("Restoring from", latest_checkpoint)
-  #       return tf.keras.models.load_model(latest_checkpoint)
-  #   print("Creating a new model")
+  if checkpoints_exist:
+    checkpoints = [cdir + "/" + name for name in os.listdir(cdir)]
+    if checkpoints:
+        latest_checkpoint = max(checkpoints, key=os.path.getctime)
+        print("Restoring from", latest_checkpoint)
+        return tf.keras.models.load_model(latest_checkpoint)
+    print("Creating a new model")
   return get_compiled_model()
 
 def train_model(tdir, cdir, model, X_train, y_train, epochs):
