@@ -151,7 +151,7 @@ def get_dataset():
 def make_or_restore_model(cdir, checkpoints_exist=False):
   # Either restore the latest model, or create a fresh one
   # if there is no checkpoint available.
-  if checkpoints_exist:
+  if os.path.exists(cdir) and os.listdir(cdir):
     checkpoints = [cdir + "/" + name for name in os.listdir(cdir)]
     if checkpoints:
         latest_checkpoint = max(checkpoints, key=os.path.getctime)
