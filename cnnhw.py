@@ -1,16 +1,16 @@
-# # -*- coding: utf-8 -*-
-# ## Stage 1: Installing dependencies and notebook gpu setup
+# # # -*- coding: utf-8 -*-
+# # ## Stage 1: Installing dependencies and notebook gpu setup
 
 import os, shutil
 import json
+import sys
+import datetime
 os.environ['NCCL_P2P_DISABLE'] = "1"
 # Commented out IPython magic to ensure Python compatibility.
 #get a local copy of datasets
-import sys
 import tensorflow as tf
 from tensorflow.keras.callbacks import TensorBoard
 from tensorflow.keras.callbacks import ModelCheckpoint
-import datetime
 from tensorflow.keras.datasets import cifar10
 
 #for RTX GPUs
@@ -160,7 +160,7 @@ def make_or_restore_model(cdir, checkpoints_exist=False):
   #   print("Creating a new model")
   return get_compiled_model()
 
-def train_model(cdir, model, X_train, y_train, epochs):
+def train_model(tdir, cdir, model, X_train, y_train, epochs):
   # Directory for TensorBoard logs
   log_dir = tdir + "/logs/fit/" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
 
@@ -190,52 +190,44 @@ if __name__ == "__main__":
 
    # getting the list of nodes in the form ["c28", "c29"]
   nodes = os.environ.get('SLURM_NODELIST')
-  nodes = nodes.replace("c", "")
-  nodes = nodes.replace("[", "")
+  nodes = nodes.replace("c[", "")
   nodes = nodes.replace("]", "")
   nodes = nodes.split("-")
-  new_nodes = []
-  for node in nodes:
-    new_nodes.append("c" + node)
-  nodes = new_nodes
-  print(nodes)
-  # Define the cluster specification
+  start_node = int(nodes[0])
+  stop_node = int(nodes[1])
+  num_nodes = stop_node - start_node + 1
+  base_port = 8000
+  workers = []
+  for i in range(num_nodes):
+    workers.append(f"c{start_node + i:d}:{base_port + i:d}")
   cluster_spec = {
-      "worker": [f"{nodes[0]}:8000",f"{nodes[1]}:8001"]
+      "worker": workers
   }
 
-  # For the first worker (c22), set the task type and index in the TF_CONFIG environment variable to "worker" and 0, respectively:
-  if argv[1] == "0":
-    os.environ["TF_CONFIG"] = json.dumps({
-        "cluster": cluster_spec,
-        "task": {"type": "worker", "index": 0}  # This is for the first worker
-    })
+  index = int(argv[1])
+  if index < -1 or index > num_nodes - 1 :
+    print("Invalid use of cnnhw you must only provide a valid job index")
+    print("Just index must either be -1 or in the range [0,number of nodes - 1]")
+    exit()
 
-  # For the second worker (c23), set the task type and index in the TF_CONFIG environment variable to "worker" and 1, respectively:
-  elif argv[1] == "1":
-    os.environ["TF_CONFIG"] = json.dumps({
-        "cluster": cluster_spec,
-        "task": {"type": "worker", "index": 1}  # This is for the second worker
-    })
-
-  # For the evaluator, you would set the task type and index in the TF_CONFIG environment variable to "evaluator" and 0, respectively:
-  elif argv[1] == "-1":
-    os.environ["TF_CONFIG"] = json.dumps({
-        "cluster": cluster_spec,
-        "task": {"type": "evaluator", "index": 0}  # This is for the evaluator
-    })
-  # Check if the current task is evaluator
   user = os.environ.get("USER")
-  if argv[1] == "-1":
+  if index == -1:
     cdir = "/home/" + user + "/ckpt"
     tdir = "/home/" + user + "/tb"
   else:
     cdir = "/tmp/" + user + "/ckpt"
     tdir = "/tmp/" + user +"/tb"
 
-  checkpoint_exists = True
+  job = "worker"
+  if index == -1:
+    job = "evalulator"
+    index = 0
 
-  epochs = 15
+  os.environ["TF_CONFIG"] = json.dumps({
+        "cluster": cluster_spec,
+        "task": {"type": job, "index": index}  # This is for the evaluator
+    })
+
 
   # if (os.path.exists(cdir)):
   #   files = files = os.listdir(cdir)
@@ -253,9 +245,12 @@ if __name__ == "__main__":
 
   strategy = tf.distribute.MultiWorkerMirroredStrategy()
 
+  checkpoint_exists = True
+  epochs = 15
+
   with strategy.scope():
     X_train, y_train, X_test, y_test, model = get_data_and_model(cdir, checkpoint_exists)
-    train_model(cdir, model, X_train, y_train, epochs)
+    train_model(tdir, cdir, model, X_train, y_train, epochs)
 
     # Model evaluation and prediction
    # test_loss, test_accuracy = model.evaluate(X_test, y_test)
