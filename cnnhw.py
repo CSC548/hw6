@@ -201,7 +201,8 @@ if __name__ == "__main__":
   for i in range(num_nodes):
     workers.append(f"c{start_node + i:d}:{base_port + i:d}")
   cluster_spec = {
-      "worker": workers
+      "worker": workers, 
+      "evaluator" : [workers[0]]
   }
 
   index = int(argv[1])
@@ -229,7 +230,7 @@ if __name__ == "__main__":
     })
 
 
-  epochs = 5
+  epochs = 1 
   if (os.path.exists(cdir)):
     files = files = os.listdir(cdir)
   # if there is a file for every epoch of training this means training is done
@@ -247,11 +248,10 @@ if __name__ == "__main__":
   strategy = tf.distribute.MultiWorkerMirroredStrategy()
 
   checkpoint_exists = True
-
+  with strategy.scope():
+     X_train, y_train, X_test, y_test, model = get_data_and_model(cdir, checkpoint_exists)
   if job == "worker": 
-     with strategy.scope():
-        X_train, y_train, X_test, y_test, model = get_data_and_model(cdir, checkpoint_exists)
-        train_model(tdir, cdir, model, X_train, y_train, epochs)
+     train_model(tdir, cdir, model, X_train, y_train, epochs)
     # Model evaluation and prediction
   elif job == "evaluator":  
     test_loss, test_accuracy = model.evaluate(X_test, y_test)
