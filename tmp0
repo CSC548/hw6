@@ -1,32 +1,109 @@
-2024-04-11 12:38:08.535635: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
+2024-04-14 00:17:23.564953: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
 To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
-2024-04-11 12:38:08.906567: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1510] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 6037 MB memory:  -> device: 0, name: NVIDIA GeForce RTX 4060 Ti, pci bus id: 0000:41:00.0, compute capability: 8.9
-2024-04-11 12:38:08.907262: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1510] Created device /job:localhost/replica:0/task:0/device:GPU:1 with 6655 MB memory:  -> device: 1, name: NVIDIA GeForce RTX 2060 SUPER, pci bus id: 0000:01:00.0, compute capability: 7.5
-WARNING:tensorflow:From cnnhw.py:254: _CollectiveAllReduceStrategyExperimental.__init__ (from tensorflow.python.distribute.collective_all_reduce_strategy) is deprecated and will be removed in a future version.
-Instructions for updating:
-use distribute.MultiWorkerMirroredStrategy instead
-2024-04-11 12:38:08.916568: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1510] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 6037 MB memory:  -> device: 0, name: NVIDIA GeForce RTX 4060 Ti, pci bus id: 0000:41:00.0, compute capability: 8.9
-2024-04-11 12:38:08.917059: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1510] Created device /job:localhost/replica:0/task:0/device:GPU:1 with 6655 MB memory:  -> device: 1, name: NVIDIA GeForce RTX 2060 SUPER, pci bus id: 0000:01:00.0, compute capability: 7.5
-2024-04-11 12:38:08.922944: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1510] Created device /job:worker/replica:0/task:0/device:GPU:0 with 6037 MB memory:  -> device: 0, name: NVIDIA GeForce RTX 4060 Ti, pci bus id: 0000:41:00.0, compute capability: 8.9
-2024-04-11 12:38:08.923421: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1510] Created device /job:worker/replica:0/task:0/device:GPU:1 with 6655 MB memory:  -> device: 1, name: NVIDIA GeForce RTX 2060 SUPER, pci bus id: 0000:01:00.0, compute capability: 7.5
-E0411 12:38:08.925383178 2416192 server_chttp2.cc:40]        {"created":"@1712853488.925332531","description":"No address added out of total 1 resolved","file":"external/com_github_grpc_grpc/src/core/ext/transport/chttp2/server/chttp2_server.cc","file_line":395,"referenced_errors":[{"created":"@1712853488.925330267","description":"Failed to add any wildcard listeners","file":"external/com_github_grpc_grpc/src/core/lib/iomgr/tcp_server_posix.cc","file_line":342,"referenced_errors":[{"created":"@1712853488.925318455","description":"Unable to configure socket","fd":56,"file":"external/com_github_grpc_grpc/src/core/lib/iomgr/tcp_server_utils_posix_common.cc","file_line":216,"referenced_errors":[{"created":"@1712853488.925314567","description":"Address already in use","errno":98,"file":"external/com_github_grpc_grpc/src/core/lib/iomgr/tcp_server_utils_posix_common.cc","file_line":189,"os_error":"Address already in use","syscall":"bind"}]},{"created":"@1712853488.925330097","description":"Unable to configure socket","fd":56,"file":"external/com_github_grpc_grpc/src/core/lib/iomgr/tcp_server_utils_posix_common.cc","file_line":216,"referenced_errors":[{"created":"@1712853488.925327091","description":"Address already in use","errno":98,"file":"external/com_github_grpc_grpc/src/core/lib/iomgr/tcp_server_utils_posix_common.cc","file_line":189,"os_error":"Address already in use","syscall":"bind"}]}]}]}
-2024-04-11 12:38:08.925413: E tensorflow/core/distributed_runtime/rpc/grpc_server_lib.cc:545] Unknown: Could not start gRPC server
-2024-04-11 12:38:08.925850: E tensorflow/core/common_runtime/eager/context_distributed_manager.cc:699] Could not start gRPC server
+2024-04-14 00:17:24.157597: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:937] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2024-04-14 00:17:24.186419: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:937] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2024-04-14 00:17:24.186666: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:937] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2024-04-14 00:17:24.262910: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:937] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2024-04-14 00:17:24.263119: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:937] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2024-04-14 00:17:24.263295: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:937] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2024-04-14 00:17:24.263451: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1510] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 6833 MB memory:  -> device: 0, name: NVIDIA GeForce RTX 2060 SUPER, pci bus id: 0000:81:00.0, compute capability: 7.5
+2024-04-14 00:17:24.266568: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:937] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2024-04-14 00:17:24.266753: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:937] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2024-04-14 00:17:24.266910: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:937] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2024-04-14 00:17:24.267427: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:937] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2024-04-14 00:17:24.267600: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:937] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2024-04-14 00:17:24.267754: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:937] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2024-04-14 00:17:24.267935: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:937] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2024-04-14 00:17:24.268092: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:937] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2024-04-14 00:17:24.268217: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1510] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 6833 MB memory:  -> device: 0, name: NVIDIA GeForce RTX 2060 SUPER, pci bus id: 0000:81:00.0, compute capability: 7.5
+2024-04-14 00:17:24.270494: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:937] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2024-04-14 00:17:24.270676: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:937] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2024-04-14 00:17:24.270832: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:937] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2024-04-14 00:17:24.271011: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:937] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2024-04-14 00:17:24.271167: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:937] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2024-04-14 00:17:24.271298: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1510] Created device /job:worker/replica:0/task:0/device:GPU:0 with 6833 MB memory:  -> device: 0, name: NVIDIA GeForce RTX 2060 SUPER, pci bus id: 0000:81:00.0, compute capability: 7.5
+2024-04-14 00:17:24.277807: I tensorflow/core/distributed_runtime/rpc/grpc_channel.cc:272] Initialize GrpcChannelCache for job worker -> {0 -> c34:8000, 1 -> c35:8001}
+2024-04-14 00:17:24.279658: I tensorflow/core/distributed_runtime/rpc/grpc_server_lib.cc:427] Started server with target: grpc://c34:8000
+WARNING:tensorflow:/job:worker/replica:0/task:1 seems down, retrying 1/3
+WARNING:tensorflow:/job:worker/replica:0/task:1 seems down, retrying 2/3
+ERROR:tensorflow:Cluster check alive failed, /job:worker/replica:0/task:1 is down, aborting collectives: failed to connect to all addresses
+Additional GRPC error information from remote target /job:worker/replica:0/task:1:
+:{"created":"@1713068274.779096393","description":"Failed to pick subchannel","file":"external/com_github_grpc_grpc/src/core/ext/filters/client_channel/client_channel.cc","file_line":3941,"referenced_errors":[{"created":"@1713068274.778326119","description":"failed to connect to all addresses","file":"external/com_github_grpc_grpc/src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":393,"grpc_status":14}]}
+2024-04-14 00:17:54.779276: E tensorflow/core/common_runtime/base_collective_executor.cc:247] BaseCollectiveExecutor::StartAbort Unavailable: cluster check alive failed, /job:worker/replica:0/task:1 is down
+['c34', 'c35']
+Restoring from /tmp/gsgall/ckpt/ckpt-1
 Traceback (most recent call last):
-  File "cnnhw.py", line 254, in <module>
-    strategy = tf.distribute.experimental.MultiWorkerMirroredStrategy()
-  File "/home/gsgall/.local/lib/python3.6/site-packages/tensorflow/python/util/deprecation.py", line 346, in new_func
-    return func(*args, **kwargs)
-  File "/home/gsgall/.local/lib/python3.6/site-packages/tensorflow/python/distribute/collective_all_reduce_strategy.py", line 254, in __init__
-    self).__init__(cluster_resolver, communication_options)
-  File "/home/gsgall/.local/lib/python3.6/site-packages/tensorflow/python/distribute/collective_all_reduce_strategy.py", line 189, in __init__
-    communication_options=communication_options))
-  File "/home/gsgall/.local/lib/python3.6/site-packages/tensorflow/python/distribute/collective_all_reduce_strategy.py", line 327, in __init__
-    self._initialize_strategy(self._cluster_resolver)
-  File "/home/gsgall/.local/lib/python3.6/site-packages/tensorflow/python/distribute/collective_all_reduce_strategy.py", line 339, in _initialize_strategy
-    self._initialize_multi_worker(cluster_resolver)
-  File "/home/gsgall/.local/lib/python3.6/site-packages/tensorflow/python/distribute/collective_all_reduce_strategy.py", line 469, in _initialize_multi_worker
-    context.context().ensure_initialized()
-  File "/home/gsgall/.local/lib/python3.6/site-packages/tensorflow/python/eager/context.py", line 567, in ensure_initialized
-    pywrap_tfe.TFE_EnableCollectiveOps(context_handle, server_def_str)
-tensorflow.python.framework.errors_impl.UnknownError: Could not start gRPC server
+  File "cnnhw.py", line 257, in <module>
+    X_train, y_train, X_test, y_test, model = get_data_and_model(cdir, checkpoint_exists)
+  File "cnnhw.py", line 179, in get_data_and_model
+    model = make_or_restore_model(cdir, checkpoint_exists)
+  File "cnnhw.py", line 159, in make_or_restore_model
+    return tf.keras.models.load_model(latest_checkpoint)
+  File "/home/gsgall/.local/lib/python3.6/site-packages/keras/saving/save.py", line 205, in load_model
+    return saved_model_load.load(filepath, compile, options)
+  File "/home/gsgall/.local/lib/python3.6/site-packages/keras/saving/saved_model/load.py", line 134, in load
+    keras_loader.load_layers(compile=compile)
+  File "/home/gsgall/.local/lib/python3.6/site-packages/keras/saving/saved_model/load.py", line 402, in load_layers
+    node_metadata.metadata)
+  File "/home/gsgall/.local/lib/python3.6/site-packages/keras/saving/saved_model/load.py", line 436, in _load_layer
+    obj, setter = self._revive_from_config(identifier, metadata, node_id)
+  File "/home/gsgall/.local/lib/python3.6/site-packages/keras/saving/saved_model/load.py", line 450, in _revive_from_config
+    obj = self._revive_metric_from_config(metadata)
+  File "/home/gsgall/.local/lib/python3.6/site-packages/keras/saving/saved_model/load.py", line 573, in _revive_metric_from_config
+    generic_utils.serialize_keras_class_and_config(class_name, config))
+  File "/home/gsgall/.local/lib/python3.6/site-packages/keras/metrics.py", line 3673, in deserialize
+    printable_module_name='metric function')
+  File "/home/gsgall/.local/lib/python3.6/site-packages/keras/utils/generic_utils.py", line 681, in deserialize_keras_object
+    deserialized_obj = cls.from_config(cls_config)
+  File "/home/gsgall/.local/lib/python3.6/site-packages/keras/metrics.py", line 704, in from_config
+    return cls(get(fn), **config)
+  File "/home/gsgall/.local/lib/python3.6/site-packages/keras/metrics.py", line 647, in __init__
+    super(MeanMetricWrapper, self).__init__(name=name, dtype=dtype)
+  File "/home/gsgall/.local/lib/python3.6/site-packages/keras/metrics.py", line 535, in __init__
+    reduction=metrics_utils.Reduction.WEIGHTED_MEAN, name=name, dtype=dtype)
+  File "/home/gsgall/.local/lib/python3.6/site-packages/keras/metrics.py", line 374, in __init__
+    'total', initializer='zeros')
+  File "/home/gsgall/.local/lib/python3.6/site-packages/keras/metrics.py", line 320, in add_weight
+    aggregation=aggregation)
+  File "/home/gsgall/.local/lib/python3.6/site-packages/keras/engine/base_layer.py", line 663, in add_weight
+    caching_device=caching_device)
+  File "/home/gsgall/.local/lib/python3.6/site-packages/tensorflow/python/training/tracking/base.py", line 818, in _add_variable_with_custom_getter
+    **kwargs_for_getter)
+  File "/home/gsgall/.local/lib/python3.6/site-packages/keras/engine/base_layer_utils.py", line 129, in make_variable
+    shape=variable_shape if variable_shape else None)
+  File "/home/gsgall/.local/lib/python3.6/site-packages/tensorflow/python/ops/variables.py", line 266, in __call__
+    return cls._variable_v1_call(*args, **kwargs)
+  File "/home/gsgall/.local/lib/python3.6/site-packages/tensorflow/python/ops/variables.py", line 227, in _variable_v1_call
+    shape=shape)
+  File "/home/gsgall/.local/lib/python3.6/site-packages/tensorflow/python/ops/variables.py", line 67, in getter
+    return captured_getter(captured_previous, **kwargs)
+  File "/home/gsgall/.local/lib/python3.6/site-packages/tensorflow/python/distribute/distribute_lib.py", line 2127, in creator_with_resource_vars
+    created = self._create_variable(next_creator, **kwargs)
+  File "/home/gsgall/.local/lib/python3.6/site-packages/tensorflow/python/distribute/mirrored_strategy.py", line 530, in _create_variable
+    distribute_utils.VARIABLE_POLICY_MAPPING, **kwargs)
+  File "/home/gsgall/.local/lib/python3.6/site-packages/tensorflow/python/distribute/distribute_utils.py", line 308, in create_mirrored_variable
+    value_list = real_mirrored_creator(**kwargs)
+  File "/home/gsgall/.local/lib/python3.6/site-packages/tensorflow/python/distribute/mirrored_strategy.py", line 522, in _real_mirrored_creator
+    v = next_creator(**kwargs)
+  File "/home/gsgall/.local/lib/python3.6/site-packages/tensorflow/python/ops/variables.py", line 205, in <lambda>
+    previous_getter = lambda **kwargs: default_variable_creator(None, **kwargs)
+  File "/home/gsgall/.local/lib/python3.6/site-packages/tensorflow/python/ops/variable_scope.py", line 2626, in default_variable_creator
+    shape=shape)
+  File "/home/gsgall/.local/lib/python3.6/site-packages/tensorflow/python/ops/variables.py", line 270, in __call__
+    return super(VariableMetaclass, cls).__call__(*args, **kwargs)
+  File "/home/gsgall/.local/lib/python3.6/site-packages/tensorflow/python/ops/resource_variable_ops.py", line 1613, in __init__
+    distribute_strategy=distribute_strategy)
+  File "/home/gsgall/.local/lib/python3.6/site-packages/tensorflow/python/ops/resource_variable_ops.py", line 1740, in _init_from_args
+    initial_value = initial_value()
+  File "/home/gsgall/.local/lib/python3.6/site-packages/tensorflow/python/distribute/collective_all_reduce_strategy.py", line 572, in initial_value_fn
+    group_size, group_key, collective_instance_key)
+  File "/home/gsgall/.local/lib/python3.6/site-packages/tensorflow/python/ops/collective_ops.py", line 268, in broadcast_send
+    timeout_seconds=timeout)
+  File "/home/gsgall/.local/lib/python3.6/site-packages/tensorflow/python/ops/gen_collective_ops.py", line 246, in collective_bcast_send
+    timeout_seconds=timeout_seconds, name=name, ctx=_ctx)
+  File "/home/gsgall/.local/lib/python3.6/site-packages/tensorflow/python/ops/gen_collective_ops.py", line 301, in collective_bcast_send_eager_fallback
+    attrs=_attrs, ctx=ctx, name=name)
+  File "/home/gsgall/.local/lib/python3.6/site-packages/tensorflow/python/eager/execute.py", line 60, in quick_execute
+    inputs, attrs, num_outputs)
+tensorflow.python.framework.errors_impl.UnavailableError: [_Derived_]Collective ops is aborted by: cluster check alive failed, /job:worker/replica:0/task:1 is down
+The error could be from a previous operation. Restart your program to reset. [Op:CollectiveBcastSend]

@@ -1,32 +1,91 @@
-2024-04-11 12:38:08.536150: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
+2024-04-14 00:17:23.450009: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 AVX512F FMA
 To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
-2024-04-11 12:38:08.908567: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1510] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 6037 MB memory:  -> device: 0, name: NVIDIA GeForce RTX 4060 Ti, pci bus id: 0000:41:00.0, compute capability: 8.9
-2024-04-11 12:38:08.909324: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1510] Created device /job:localhost/replica:0/task:0/device:GPU:1 with 6655 MB memory:  -> device: 1, name: NVIDIA GeForce RTX 2060 SUPER, pci bus id: 0000:01:00.0, compute capability: 7.5
-WARNING:tensorflow:From cnnhw.py:254: _CollectiveAllReduceStrategyExperimental.__init__ (from tensorflow.python.distribute.collective_all_reduce_strategy) is deprecated and will be removed in a future version.
-Instructions for updating:
-use distribute.MultiWorkerMirroredStrategy instead
-2024-04-11 12:38:08.919101: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1510] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 6037 MB memory:  -> device: 0, name: NVIDIA GeForce RTX 4060 Ti, pci bus id: 0000:41:00.0, compute capability: 8.9
-2024-04-11 12:38:08.919380: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1510] Created device /job:localhost/replica:0/task:0/device:GPU:1 with 6655 MB memory:  -> device: 1, name: NVIDIA GeForce RTX 2060 SUPER, pci bus id: 0000:01:00.0, compute capability: 7.5
-2024-04-11 12:38:08.924953: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1510] Created device /job:worker/replica:0/task:1/device:GPU:0 with 6037 MB memory:  -> device: 0, name: NVIDIA GeForce RTX 4060 Ti, pci bus id: 0000:41:00.0, compute capability: 8.9
-2024-04-11 12:38:08.925223: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1510] Created device /job:worker/replica:0/task:1/device:GPU:1 with 6655 MB memory:  -> device: 1, name: NVIDIA GeForce RTX 2060 SUPER, pci bus id: 0000:01:00.0, compute capability: 7.5
-E0411 12:38:08.926961006 2416190 server_chttp2.cc:40]        {"created":"@1712853488.926910710","description":"No address added out of total 1 resolved","file":"external/com_github_grpc_grpc/src/core/ext/transport/chttp2/server/chttp2_server.cc","file_line":395,"referenced_errors":[{"created":"@1712853488.926908897","description":"Failed to add any wildcard listeners","file":"external/com_github_grpc_grpc/src/core/lib/iomgr/tcp_server_posix.cc","file_line":342,"referenced_errors":[{"created":"@1712853488.926895251","description":"Unable to configure socket","fd":56,"file":"external/com_github_grpc_grpc/src/core/lib/iomgr/tcp_server_utils_posix_common.cc","file_line":216,"referenced_errors":[{"created":"@1712853488.926891644","description":"Address already in use","errno":98,"file":"external/com_github_grpc_grpc/src/core/lib/iomgr/tcp_server_utils_posix_common.cc","file_line":189,"os_error":"Address already in use","syscall":"bind"}]},{"created":"@1712853488.926908606","description":"Unable to configure socket","fd":56,"file":"external/com_github_grpc_grpc/src/core/lib/iomgr/tcp_server_utils_posix_common.cc","file_line":216,"referenced_errors":[{"created":"@1712853488.926903797","description":"Address already in use","errno":98,"file":"external/com_github_grpc_grpc/src/core/lib/iomgr/tcp_server_utils_posix_common.cc","file_line":189,"os_error":"Address already in use","syscall":"bind"}]}]}]}
-2024-04-11 12:38:08.926991: E tensorflow/core/distributed_runtime/rpc/grpc_server_lib.cc:545] Unknown: Could not start gRPC server
-2024-04-11 12:38:08.927183: E tensorflow/core/common_runtime/eager/context_distributed_manager.cc:699] Could not start gRPC server
+2024-04-14 00:17:24.705065: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1510] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 14407 MB memory:  -> device: 0, name: NVIDIA RTX A4000, pci bus id: 0000:af:00.0, compute capability: 8.6
+2024-04-14 00:17:24.709639: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1510] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 14407 MB memory:  -> device: 0, name: NVIDIA RTX A4000, pci bus id: 0000:af:00.0, compute capability: 8.6
+2024-04-14 00:17:24.711901: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1510] Created device /job:worker/replica:0/task:1/device:GPU:0 with 14407 MB memory:  -> device: 0, name: NVIDIA RTX A4000, pci bus id: 0000:af:00.0, compute capability: 8.6
+2024-04-14 00:17:24.720321: I tensorflow/core/distributed_runtime/rpc/grpc_channel.cc:272] Initialize GrpcChannelCache for job worker -> {0 -> c34:8000, 1 -> c35:8001}
+2024-04-14 00:17:24.721020: I tensorflow/core/distributed_runtime/rpc/grpc_server_lib.cc:427] Started server with target: grpc://c35:8001
+2024-04-14 00:17:25.950294: E tensorflow/core/common_runtime/base_collective_executor.cc:247] BaseCollectiveExecutor::StartAbort Internal: Collective instance 121 expected type 1 and data_type 1 but got type 1 and data_type 9
+Additional GRPC error information from remote target /job:worker/replica:0/task:0:
+:{"created":"@1713068245.950171984","description":"Error received from peer ipv4:10.11.1.35:8000","file":"external/com_github_grpc_grpc/src/core/lib/surface/call.cc","file_line":1056,"grpc_message":"Collective instance 121 expected type 1 and data_type 1 but got type 1 and data_type 9","grpc_status":13}
+['c34', 'c35']
+Creating a new model
+Model: "sequential"
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+conv2d (Conv2D)              (None, 32, 32, 32)        896       
+_________________________________________________________________
+conv2d_1 (Conv2D)            (None, 32, 32, 32)        9248      
+_________________________________________________________________
+max_pooling2d (MaxPooling2D) (None, 16, 16, 32)        0         
+_________________________________________________________________
+conv2d_2 (Conv2D)            (None, 16, 16, 64)        18496     
+_________________________________________________________________
+conv2d_3 (Conv2D)            (None, 16, 16, 64)        36928     
+_________________________________________________________________
+max_pooling2d_1 (MaxPooling2 (None, 8, 8, 64)          0         
+_________________________________________________________________
+flatten (Flatten)            (None, 4096)              0         
+_________________________________________________________________
+dense (Dense)                (None, 128)               524416    
+_________________________________________________________________
+dense_1 (Dense)              (None, 10)                1290      
+=================================================================
+Total params: 591,274
+Trainable params: 591,274
+Non-trainable params: 0
+_________________________________________________________________
 Traceback (most recent call last):
-  File "cnnhw.py", line 254, in <module>
-    strategy = tf.distribute.experimental.MultiWorkerMirroredStrategy()
-  File "/home/gsgall/.local/lib/python3.6/site-packages/tensorflow/python/util/deprecation.py", line 346, in new_func
-    return func(*args, **kwargs)
-  File "/home/gsgall/.local/lib/python3.6/site-packages/tensorflow/python/distribute/collective_all_reduce_strategy.py", line 254, in __init__
-    self).__init__(cluster_resolver, communication_options)
-  File "/home/gsgall/.local/lib/python3.6/site-packages/tensorflow/python/distribute/collective_all_reduce_strategy.py", line 189, in __init__
-    communication_options=communication_options))
-  File "/home/gsgall/.local/lib/python3.6/site-packages/tensorflow/python/distribute/collective_all_reduce_strategy.py", line 327, in __init__
-    self._initialize_strategy(self._cluster_resolver)
-  File "/home/gsgall/.local/lib/python3.6/site-packages/tensorflow/python/distribute/collective_all_reduce_strategy.py", line 339, in _initialize_strategy
-    self._initialize_multi_worker(cluster_resolver)
-  File "/home/gsgall/.local/lib/python3.6/site-packages/tensorflow/python/distribute/collective_all_reduce_strategy.py", line 469, in _initialize_multi_worker
-    context.context().ensure_initialized()
-  File "/home/gsgall/.local/lib/python3.6/site-packages/tensorflow/python/eager/context.py", line 567, in ensure_initialized
-    pywrap_tfe.TFE_EnableCollectiveOps(context_handle, server_def_str)
-tensorflow.python.framework.errors_impl.UnknownError: Could not start gRPC server
+  File "cnnhw.py", line 257, in <module>
+    X_train, y_train, X_test, y_test, model = get_data_and_model(cdir, checkpoint_exists)
+  File "cnnhw.py", line 179, in get_data_and_model
+    model = make_or_restore_model(cdir, checkpoint_exists)
+  File "cnnhw.py", line 161, in make_or_restore_model
+    return get_compiled_model()
+  File "cnnhw.py", line 131, in get_compiled_model
+    optimizer="Adam", metrics=["sparse_categorical_accuracy"])
+  File "/home/gsgall/.local/lib/python3.6/site-packages/keras/engine/training.py", line 565, in compile
+    self._configure_steps_per_execution(steps_per_execution or 1)
+  File "/home/gsgall/.local/lib/python3.6/site-packages/tensorflow/python/training/tracking/base.py", line 530, in _method_wrapper
+    result = method(self, *args, **kwargs)
+  File "/home/gsgall/.local/lib/python3.6/site-packages/keras/engine/training.py", line 617, in _configure_steps_per_execution
+    aggregation=tf.VariableAggregation.ONLY_FIRST_REPLICA)
+  File "/home/gsgall/.local/lib/python3.6/site-packages/tensorflow/python/ops/variables.py", line 268, in __call__
+    return cls._variable_v2_call(*args, **kwargs)
+  File "/home/gsgall/.local/lib/python3.6/site-packages/tensorflow/python/ops/variables.py", line 262, in _variable_v2_call
+    shape=shape)
+  File "/home/gsgall/.local/lib/python3.6/site-packages/tensorflow/python/ops/variables.py", line 67, in getter
+    return captured_getter(captured_previous, **kwargs)
+  File "/home/gsgall/.local/lib/python3.6/site-packages/tensorflow/python/distribute/distribute_lib.py", line 2127, in creator_with_resource_vars
+    created = self._create_variable(next_creator, **kwargs)
+  File "/home/gsgall/.local/lib/python3.6/site-packages/tensorflow/python/distribute/mirrored_strategy.py", line 530, in _create_variable
+    distribute_utils.VARIABLE_POLICY_MAPPING, **kwargs)
+  File "/home/gsgall/.local/lib/python3.6/site-packages/tensorflow/python/distribute/distribute_utils.py", line 308, in create_mirrored_variable
+    value_list = real_mirrored_creator(**kwargs)
+  File "/home/gsgall/.local/lib/python3.6/site-packages/tensorflow/python/distribute/mirrored_strategy.py", line 522, in _real_mirrored_creator
+    v = next_creator(**kwargs)
+  File "/home/gsgall/.local/lib/python3.6/site-packages/tensorflow/python/ops/variables.py", line 243, in <lambda>
+    previous_getter = lambda **kws: default_variable_creator_v2(None, **kws)
+  File "/home/gsgall/.local/lib/python3.6/site-packages/tensorflow/python/ops/variable_scope.py", line 2675, in default_variable_creator_v2
+    shape=shape)
+  File "/home/gsgall/.local/lib/python3.6/site-packages/tensorflow/python/ops/variables.py", line 270, in __call__
+    return super(VariableMetaclass, cls).__call__(*args, **kwargs)
+  File "/home/gsgall/.local/lib/python3.6/site-packages/tensorflow/python/ops/resource_variable_ops.py", line 1613, in __init__
+    distribute_strategy=distribute_strategy)
+  File "/home/gsgall/.local/lib/python3.6/site-packages/tensorflow/python/ops/resource_variable_ops.py", line 1740, in _init_from_args
+    initial_value = initial_value()
+  File "/home/gsgall/.local/lib/python3.6/site-packages/tensorflow/python/distribute/collective_all_reduce_strategy.py", line 579, in initial_value_fn
+    collective_instance_key)
+  File "/home/gsgall/.local/lib/python3.6/site-packages/tensorflow/python/ops/collective_ops.py", line 345, in broadcast_recv
+    timeout_seconds=timeout)
+  File "/home/gsgall/.local/lib/python3.6/site-packages/tensorflow/python/ops/gen_collective_ops.py", line 59, in collective_bcast_recv
+    timeout_seconds=timeout_seconds, name=name, ctx=_ctx)
+  File "/home/gsgall/.local/lib/python3.6/site-packages/tensorflow/python/ops/gen_collective_ops.py", line 115, in collective_bcast_recv_eager_fallback
+    attrs=_attrs, ctx=ctx, name=name)
+  File "/home/gsgall/.local/lib/python3.6/site-packages/tensorflow/python/eager/execute.py", line 60, in quick_execute
+    inputs, attrs, num_outputs)
+tensorflow.python.framework.errors_impl.InternalError: [_Derived_]Collective ops is aborted by: Collective instance 121 expected type 1 and data_type 1 but got type 1 and data_type 9
+Additional GRPC error information from remote target /job:worker/replica:0/task:0:
+:{"created":"@1713068245.950171984","description":"Error received from peer ipv4:10.11.1.35:8000","file":"external/com_github_grpc_grpc/src/core/lib/surface/call.cc","file_line":1056,"grpc_message":"Collective instance 121 expected type 1 and data_type 1 but got type 1 and data_type 9","grpc_status":13}
+The error could be from a previous operation. Restart your program to reset. [Op:CollectiveBcastRecv]

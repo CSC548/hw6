@@ -156,7 +156,7 @@ def make_or_restore_model(cdir, checkpoints_exist=False):
     if checkpoints:
         latest_checkpoint = max(checkpoints, key=os.path.getctime)
         print("Restoring from", latest_checkpoint)
-        return keras.models.load_model(latest_checkpoint)
+        return tf.keras.models.load_model(latest_checkpoint)
     print("Creating a new model")
   return get_compiled_model()
 
@@ -201,8 +201,7 @@ if __name__ == "__main__":
   print(nodes)
   # Define the cluster specification
   cluster_spec = {
-      "worker": ["c40:8000", "c41:8000"],
-      "evaluator": ["c40:8080"]
+      "worker": [f"{nodes[0]}:8000",f"{nodes[1]}:8001"]
   }
 
   # For the first worker (c22), set the task type and index in the TF_CONFIG environment variable to "worker" and 0, respectively:
@@ -252,14 +251,15 @@ if __name__ == "__main__":
   os.makedirs(cdir, exist_ok=True)
   os.makedirs(tdir, exist_ok=True)
 
-  strategy = tf.distribute.experimental.MultiWorkerMirroredStrategy()
+  strategy = tf.distribute.MultiWorkerMirroredStrategy()
 
   with strategy.scope():
     X_train, y_train, X_test, y_test, model = get_data_and_model(cdir, checkpoint_exists)
-    train_model(cdir, model, X_train, y_train, epochs)
+
+  train_model(cdir, model, X_train, y_train, epochs)
 
     # Model evaluation and prediction
-    test_loss, test_accuracy = model.evaluate(X_test, y_test)
+   # test_loss, test_accuracy = model.evaluate(X_test, y_test)
 
-    print("Test accuracy: {}".format(test_accuracy))
+   # print("Test accuracy: {}".format(test_accuracy))
 

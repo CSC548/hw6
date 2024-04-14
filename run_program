@@ -1,15 +1,19 @@
-# Extract the range from SLURM_NODELIST and expand it into individual node names
-NODES=$(echo $SLURM_NODELIST | tr -d 'c[]' | perl -pe 's/(\d+)-(\d+)/join(" ",$1..$2)/eg')
+here=$(pwd)
 
-# Print content of NODES for debugging
-echo "Content of TF CONFIG: $TF_CONFIG"
+# Parse $SLURM_NODELIST into an iterable list of node names
+NODES=`echo $SLURM_NODELIST | tr -d c | tr -d [ | tr -d ] | perl -pe 's/(\d+)-(\d+)/join(",",$1..$2)/eg' | awk 'BEGIN { RS=","} { print "c"$1 }'`
+# For each item in the nodefile, connect via ssh and run the cmd.
+# The -n parameter is important or ssh will consume the rest
+# of the loop list in stdin.ex
+# Increment rank passed to the code for each node
+# Ports range
 
-# Split the NODES string into an array using space as delimiter
-IFS=' ' read -r -a NODE_ARRAY <<< "$NODES"
+rank=${#NODES[@]}
+base_port=8000
 
-# Print the first and second elements of the NODE_ARRAY
-#echo "First element of NODE_ARRAY: ${NODE_ARRAY[0]}"
-#echo "Second element of NODE_ARRAY: ${NODE_ARRAY[1]}"
-
-here=`pwd`
-ssh c${NODE_ARRAY[1]} fuser -k 8000/tcp && cd $here; python3 cnnhw.py 1 >& tmp1 & fuser -k 8000/tcp && python3 cnnhw.py 0 >& tmp0 && fuser -k 8000/tcp && python3 cnnhw.py -1
+for curNode in $(echo $NODES | tr ' ' '\n' | tac); do
+  file="tmp$rank"
+  port=$(($base_port + $rank))
+  ssh -n $curNode "export here=$here; export SLURM_NODELIST=$SLURM_NODELIST; fuser -k $port/tcp; cd $here; pwd; echo $file ; echo $port; export base_port=$base_port; echo $rank ;  python3 cnnhw.py $rank >& $file & "
+  (( rank-- ))
+done
