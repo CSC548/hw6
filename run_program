@@ -12,15 +12,18 @@ rank=0
 base_port=8000
 
 for curNode in $NODES; do
-  (( rank++ )) 
+  (( rank++ ))
 done
- 
-echo $rank 
 
 for curNode in $(echo $NODES | tr ' ' '\n' | tac); do
   (( rank-- ))
   file="tmp$rank"
   port=$(($base_port + $rank))
-  ssh -n $curNode "export here=$here; export SLURM_NODELIST=$SLURM_NODELIST; export USER=$USER; fuser -k $port/tcp; cd $here; pwd; echo $file ; echo $port; export base_port=$base_port; echo $rank ;  python3 cnnhw.py $rank >& $file &" &  pid[$rank]=$!
+
+  if [ $rank -eq 0 ]; then
+    ssh -n $curNode "export here=$here; export SLURM_NODELIST=$SLURM_NODELIST; export USER=$USER; fuser -k $port/tcp; cd $here; pwd; echo $file ; echo $port; export base_port=$base_port; echo $rank ;  python3 cnnhw.py $rank >& $file && python3 cnnhw.py -1"
+  else
+    ssh -n $curNode "export here=$here; export SLURM_NODELIST=$SLURM_NODELIST; export USER=$USER; fuser -k $port/tcp; cd $here; pwd; echo $file ; echo $port; export base_port=$base_port; echo $rank ;  python3 cnnhw.py $rank >& $file &"
+  fi
 done
 
