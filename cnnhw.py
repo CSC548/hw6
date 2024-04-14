@@ -176,9 +176,6 @@ def train_model(tdir, cdir, model, X_train, y_train, epochs):
   # Train the model
   model.fit(X_train, y_train, epochs=epochs, callbacks=[checkpoint_cb, tensorboard_callback])
 
-def checkpoints_exist(cdir, epoch=1):
-  return os.path.exists(cdir) and os.listdir(cdir)
-
 def get_data_and_model(cdir, checkpoint_exists):
   X_train, y_train, X_test, y_test = get_dataset()
 
@@ -248,8 +245,8 @@ if __name__ == "__main__":
     else:
       checkpoint_exists = False
     # # we'll make sure these directories exist
-    os.makedirs(cdir, exist_ok=True)
-    os.makedirs(tdir, exist_ok=True)
+  os.makedirs(cdir, exist_ok=True)
+  os.makedirs(tdir, exist_ok=True)
 
   strategy = tf.distribute.MultiWorkerMirroredStrategy()
 
@@ -280,6 +277,7 @@ if __name__ == "__main__":
           # Print a . without a newline and sleep for a second
           print(".", end="")
           time.sleep(1)
+
 
     
 
