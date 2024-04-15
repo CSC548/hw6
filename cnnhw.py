@@ -290,7 +290,7 @@ if __name__ == "__main__":
                 X_train, y_train, X_test, y_test, model = get_data_and_model(cdir, checkpoint_exists)
               test_loss, test_accuracy = model.evaluate(X_test, y_test)
               # print the test accuracy
-              tf.print("Epoch "+str(curEpoch)+" test accuracy: {}".format(curEpoch, test_accuracy))
+              tf.print("Epoch "+str(curEpoch)+" test accuracy: {}".format(test_accuracy))
               curEpoch += 1
             except:
               # if an error happens, just wait for a second and retry
