@@ -264,13 +264,20 @@ if __name__ == "__main__":
   elif job == "evaluator":  
     curEpoch = 1
     # continuously check for new checkpoints for all epochs
-    tf.print("polling for checkpoints")
     while curEpoch <= epochs:
+      tf.print("polling for checkpoints")
       for file in os.listdir(cdir):
         if "ckpt-"+curEpoch in file:
           try:
             # load the model and evaluate it
-            
+            # # Directory for TensorBoard logs
+            # log_dir = tdir + "/logs/fit/" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+
+            # # Create a callback for model checkpoints
+            # checkpoint_cb = ModelCheckpoint(filepath=cdir + "/ckpt-{epoch}", save_freq="epoch")
+
+            # Create a TensorBoard callback
+            tensorboard_callback = TensorBoard(log_dir=log_dir, histogram_freq=1)
             with strategy.scope():
               X_train, y_train, X_test, y_test, model = get_data_and_model(cdir, checkpoint_exists)
             test_loss, test_accuracy = model.evaluate(X_test, y_test)
@@ -279,11 +286,11 @@ if __name__ == "__main__":
             curEpoch += 1
           except:
             # if an error happens, just wait for a second and retry
-            tf.print(".", end="")
+            tf.print(".")
             time.sleep(1)
         else:
           # Print a . without a newline and sleep for a second
-          tf.print(".", end="")
+          tf.print(".")
           time.sleep(1)
       # test_loss, test_accuracy = model.evaluate(X_test, y_test)
       # # print the test accuracy
