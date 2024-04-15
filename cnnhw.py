@@ -271,7 +271,7 @@ if __name__ == "__main__":
     # continuously check for new checkpoints for all epochs
     while curEpoch <= epochs:
       for file in os.listdir(cdir):
-        if "ckpt-"+curEpoch in file:
+        if str("ckpt-"+curEpoch) in file:
           tf.print("reached if")
 
           try:
