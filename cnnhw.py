@@ -216,8 +216,10 @@ if __name__ == "__main__":
 
   user = os.environ.get("USER")
   if index == -1:
-    cdir = "/home/" + user + "/ckpt"
-    tdir = "/home/" + user + "/tb"
+    # cdir = "/home/" + user + "/ckpt"
+    # tdir = "/home/" + user + "/tb"
+    cdir = "/tmp/" + user + "/ckpt"
+    tdir = "/tmp/" + user +"/tb"
   else:
     cdir = "/tmp/" + user + "/ckpt"
     tdir = "/tmp/" + user +"/tb"
