@@ -248,7 +248,10 @@ if __name__ == "__main__":
   os.makedirs(cdir, exist_ok=True)
   os.makedirs(tdir, exist_ok=True)
 
-  strategy = tf.distribute.MultiWorkerMirroredStrategy()
+  if job == "evaluator":
+    strategy = tf.distribute.MirroredStrategy()
+  else:
+    strategy = tf.distribute.MultiWorkerMirroredStrategy()
 
   checkpoint_exists = True
   with strategy.scope():
