@@ -158,7 +158,7 @@ def make_or_restore_model(cdir, checkpoints_exist=False):
     if checkpoints:
         # get the most recent checkpoint
         latest_checkpoint = max(checkpoints, key=os.path.getctime)
-        print("Restoring from", latest_checkpoint)
+        print("Gathered checkpoint from", latest_checkpoint)
         return tf.keras.models.load_model(latest_checkpoint)
     print("Creating a new model")
   return get_compiled_model()
