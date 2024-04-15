@@ -254,6 +254,8 @@ if __name__ == "__main__":
     strategy = tf.distribute.MirroredStrategy()
 
   checkpoint_exists = True
+  print("ENTERING CONDITIONAL")
+
   with strategy.scope():
      X_train, y_train, X_test, y_test, model = get_data_and_model(cdir, checkpoint_exists)
   if job == "worker": 
