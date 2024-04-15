@@ -270,9 +270,9 @@ if __name__ == "__main__":
     curEpoch = 1
     # continuously check for new checkpoints for all epochs
     while curEpoch <= epochs:
-      for file in os.listdir(cdir):
-        if str("ckpt-"+curEpoch) in file:
-          tf.print("reached if")
+      for dir in os.listdir(cdir):
+        if "ckpt-"+str(curEpoch) in dir:
+          # tf.print("reached if")
 
           try:
             # load the model and evaluate it
