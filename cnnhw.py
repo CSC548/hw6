@@ -265,9 +265,10 @@ if __name__ == "__main__":
     curEpoch = 1
     # continuously check for new checkpoints for all epochs
     while curEpoch <= epochs:
-      tf.print("polling for checkpoints")
       for file in os.listdir(cdir):
         if "ckpt-"+curEpoch in file:
+          tf.print("reached if")
+
           try:
             # load the model and evaluate it
             # # Directory for TensorBoard logs
@@ -289,6 +290,8 @@ if __name__ == "__main__":
             tf.print(".")
             time.sleep(1)
         else:
+          tf.print("reached else")
+
           # Print a . without a newline and sleep for a second
           tf.print(".")
           time.sleep(1)
