@@ -259,6 +259,7 @@ if __name__ == "__main__":
   elif job == "evaluator":  
     curEpoch = 1
     # continuously check for new checkpoints for all epochs
+    print("polling for checkpoints")
     while curEpoch <= epochs:
       for file in os.listdir(cdir):
         if "ckpt-"+curEpoch in file:
