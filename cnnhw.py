@@ -233,7 +233,7 @@ if __name__ == "__main__":
     })
 
 
-  epochs = 2
+  epochs = 1
   if (os.path.exists(cdir)):
     files = os.listdir(cdir)
   # if there is a file for every epoch of training this means training is done
