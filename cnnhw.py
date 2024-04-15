@@ -264,7 +264,7 @@ if __name__ == "__main__":
   elif job == "evaluator":  
     curEpoch = 1
     # continuously check for new checkpoints for all epochs
-    print("polling for checkpoints")
+    tf.print("polling for checkpoints")
     while curEpoch <= epochs:
       for file in os.listdir(cdir):
         if "ckpt-"+curEpoch in file:
@@ -275,15 +275,15 @@ if __name__ == "__main__":
               X_train, y_train, X_test, y_test, model = get_data_and_model(cdir, checkpoint_exists)
             test_loss, test_accuracy = model.evaluate(X_test, y_test)
             # print the test accuracy
-            print("Epoch %d test accuracy: {}".format(curEpoch, test_accuracy))
+            tf.print("Epoch %d test accuracy: {}".format(curEpoch, test_accuracy))
             curEpoch += 1
           except:
             # if an error happens, just wait for a second and retry
-            print(".", end="")
+            tf.print(".", end="")
             time.sleep(1)
         else:
           # Print a . without a newline and sleep for a second
-          print(".", end="")
+          tf.print(".", end="")
           time.sleep(1)
       # test_loss, test_accuracy = model.evaluate(X_test, y_test)
       # # print the test accuracy
