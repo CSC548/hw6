@@ -11,7 +11,7 @@ os.environ['NCCL_P2P_DISABLE'] = "1"
 #get a local copy of datasets
 os.system("ln -s /mnt/beegfs/fmuelle/.keras ~/")
 import tensorflow as tf
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 
 from tensorflow.keras.datasets import cifar10
 
@@ -45,7 +45,7 @@ X_train.shape
 
 X_test = X_test / 255.0
 
-plt.imshow(X_test[10])
+# plt.imshow(X_test[10])
 
 ## Stage 4: Building a Convolutional neural network
 
