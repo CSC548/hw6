@@ -295,7 +295,7 @@ if __name__ == "__main__":
             tf.print(".")
             time.sleep(1)
         else:
-          tf.print("reached else")
+          # tf.print("reached else")
 
           # Print a . without a newline and sleep for a second
           tf.print(".")
