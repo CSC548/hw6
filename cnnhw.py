@@ -258,10 +258,13 @@ if __name__ == "__main__":
 
   with strategy.scope():
      X_train, y_train, X_test, y_test, model = get_data_and_model(cdir, checkpoint_exists)
+  
+  
   if job == "worker": 
      train_model(tdir, cdir, model, X_train, y_train, epochs)
     # Model evaluation and prediction
   elif job == "evaluator":  
+    tf.print("Starting to poll")
     curEpoch = 1
     # continuously check for new checkpoints for all epochs
     while curEpoch <= epochs:
