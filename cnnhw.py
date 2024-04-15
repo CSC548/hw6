@@ -248,10 +248,7 @@ if __name__ == "__main__":
   os.makedirs(cdir, exist_ok=True)
   os.makedirs(tdir, exist_ok=True)
 
-  if job == "evaluator":
-    strategy = tf.distribute.MirroredStrategy()
-  else:
-    strategy = tf.distribute.MultiWorkerMirroredStrategy()
+  strategy = tf.distribute.MultiWorkerMirroredStrategy()
 
   checkpoint_exists = True
   with strategy.scope():
@@ -268,6 +265,7 @@ if __name__ == "__main__":
         if "ckpt-"+curEpoch in file:
           try:
             # load the model and evaluate it
+            strategy = tf.distribute.MirroredStrategy()
             with strategy.scope():
               X_train, y_train, X_test, y_test, model = get_data_and_model(cdir, checkpoint_exists)
             test_loss, test_accuracy = model.evaluate(X_test, y_test)
