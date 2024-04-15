@@ -8,6 +8,11 @@ NODES=`echo $SLURM_NODELIST | tr -d c | tr -d [ | tr -d ] | perl -pe 's/(\d+)-(\
 # Increment rank passed to the code for each node
 # Ports range
 
+# Group info:
+# gsgall Grayson Gall
+# svasude5 Srinath Vasudevan
+# tjoshi Tej Joshi
+
 rank=0
 base_port=8000
 

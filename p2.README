@@ -1,0 +1,42 @@
+# Group info:
+# gsgall Grayson Gall
+# svasude5 Srinath Vasudevan
+# tjoshi Tej Joshi
+
+IMPLEMENTATION DETAILS
+The code in cnnhw.py uses tensorflow to train a CNN model on cifar10 data over 15 epochs. Our code saves checkpoints per each epoch for node and program failure management.
+Additionally, the computation load is distributed among multiple nodes using the run_program script. The run_program script runs cnnhw.py on multiple nodes and sets the 
+communication between nodes to port 8000 (+ rank of node) and determines which nodes are workers and evaluators.
+Our code follows the basic directions highlighted in the prompt other than the following:
+- Both the evaluator and worker save the checkpoint into one directory: TMP instead of HOME and TMP. 
+
+HOW TO RUN 
+- Salloc a number of nodes that you want to run the training on.
+- run ./run_program
+
+TIMING INFORMATION
+Ran on the following nodes:
+Serial: c43
+Parallel (2 nodes): c43-44
+
+Serial:
+5s/epoch, 3ms/step, 0.7149 accuracy
+
+Parallel (2 nodes): 
+47s/epoch, 30ms/step, and 0.7207 15 Epoch test accuracy
+
+EXPLINATION
+The parallel version is much slower than the serial version. This could be explained mainly through communcation and data synchronization overhead
+from distributing the workload over multiple nodes. Communcation wise, it seems like the process is using grpc, which is an application layer protocol.
+Due to this, the communication overhead is much higher than other forms of parallelization. Additionally, the data is being stored in a centralized location 
+within the cluster. Since many people are possibly accessing the data at once from the cluster, it could cause increased latency. Additionally, since the 
+multiWorkerMirroredStrategy uses data parallelism, the data is divided and distributed over the multiple nodes and these nodes individually process the data 
+and synchronize the results at the end. Due to this, there could be added overhead from periodically synchronizing the model to aggregate the training/evaluation
+from divided data. Lastly, checkpointing the model and recording the tensorboards add an additional overhead which could slow down the training process. 
+
+
+
+
+
+
+
