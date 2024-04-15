@@ -278,7 +278,7 @@ if __name__ == "__main__":
             # checkpoint_cb = ModelCheckpoint(filepath=cdir + "/ckpt-{epoch}", save_freq="epoch")
 
             # Create a TensorBoard callback
-            tensorboard_callback = TensorBoard(log_dir=log_dir, histogram_freq=1)
+            # tensorboard_callback = TensorBoard(log_dir=log_dir, histogram_freq=1)
             with strategy.scope():
               X_train, y_train, X_test, y_test, model = get_data_and_model(cdir, checkpoint_exists)
             test_loss, test_accuracy = model.evaluate(X_test, y_test)
