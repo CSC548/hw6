@@ -1,6 +1,9 @@
 # # # -*- coding: utf-8 -*-
 # # ## Stage 1: Installing dependencies and notebook gpu setup
-
+# Group info:
+# gsgall Grayson Gall
+# svasude5 Srinath Vasudevan
+# tjoshi Tej Joshi
 import os, shutil
 import json
 import sys
@@ -178,7 +181,7 @@ def train_model(tdir, cdir, model, X_train, y_train, epochs):
 
 def get_data_and_model(cdir, checkpoint_exists):
   X_train, y_train, X_test, y_test = get_dataset()
-
+  # Get/make the model
   model = make_or_restore_model(cdir, checkpoint_exists)
   return X_train, y_train, X_test, y_test, model
 
@@ -218,6 +221,7 @@ if __name__ == "__main__":
   if index == -1:
     # cdir = "/home/" + user + "/ckpt"
     # tdir = "/home/" + user + "/tb"
+    # NOTE: We changed there directories to /tmp/ so that the evaluator has access to checkpoints
     cdir = "/tmp/" + user + "/ckpt"
     tdir = "/tmp/" + user +"/tb"
   else:
@@ -278,14 +282,6 @@ if __name__ == "__main__":
 
             try:
               # load the model and evaluate it
-              # # Directory for TensorBoard logs
-              # log_dir = tdir + "/logs/fit/" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
-
-              # # Create a callback for model checkpoints
-              # checkpoint_cb = ModelCheckpoint(filepath=cdir + "/ckpt-{epoch}", save_freq="epoch")
-
-              # Create a TensorBoard callback
-              # tensorboard_callback = TensorBoard(log_dir=log_dir, histogram_freq=1)
               with strategy.scope():
                 X_train, y_train, X_test, y_test, model = get_data_and_model(cdir, checkpoint_exists)
               test_loss, test_accuracy = model.evaluate(X_test, y_test)
